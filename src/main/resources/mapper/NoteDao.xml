@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imooc.demo.dao.NoteDao">
+	<select id="getlistnote" resultType="com.imooc.demo.entity.Note">
+		SELECT *
+		FROM note WHERE noteType = #{type}
+		ORDER BY noteTime
+		DESC
+	</select>
+	<select id="getNoteById" resultType="com.imooc.demo.entity.Note">
+		SELECT *
+		FROM note
+		WHERE noteId = #{noteId}
+	</select>
+	<select id="getByNoteId" resultType="com.imooc.demo.entity.Note">
+		SELECT *
+		FROM note
+		WHERE noteId = #{id}
+	</select>
+	<delete id="delNote">
+		DELETE FROM
+		note WHERE
+			noteId = #{id}
+	</delete>
+	<insert id="addNote" useGeneratedKeys="true" keyProperty="noteId"
+			keyColumn="noteId" parameterType="com.imooc.demo.entity.Note">
+		INSERT INTO
+		note(noteTitle,
+             noteBody,noteSource,noteTime,noteType,noteTitleImg)
+		VALUES
+		(#{noteTitle},#{noteBody},
+		#{noteSource},#{noteTime},#{noteType},#{noteTitleImg})
+	</insert>
+    <update id="updateBody" parameterType="com.imooc.demo.entity.Note">
+        update note
+        <set>
+            noteTitle=#{noteTitle},
+            noteBody=#{noteBody},
+            noteSource=#{noteSource}
+            noteTime=#{noteTime}
+            noteType=#{noteType}
+            noteTitleImg=#{noteTitleImg}
+        </set>
+        where noteId=#{noteId}
+    </update>
+	<select id="getSeek" resultType="com.imooc.demo.entity.Note">
+		SELECT *
+		FROM note WHERE noteTitle LIKE "%"#{title}"%"
+		ORDER BY noteTime
+		DESC
+	</select>
+</mapper>
+    
